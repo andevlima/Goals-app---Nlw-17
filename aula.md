@@ -58,3 +58,38 @@ let metas = [
 ]
 // pegou a primeira meta (do livro)
 console.log(meta[0].value)
+
+.........................
+
+// estrutura de repetição while
+// count é igual a zero no começo, e é somado 1 numero a ele ao final, enquanto ele for menor q 10 ele aparecerá no terminal, quando não for mais, a estrutura para de se repetir
+const start = () => {
+  let count = 0
+  while(count < 10){
+    console.log(count)
+    count = count + 1
+  }
+}
+
+start()
+
+...........................
+
+// do jeito q o código está abaixo, se no lugar de "sair" fosse uma das outras opções, o terminal ia executar essa função pra sempre
+const start = () => {
+  while(count < 10){
+    let opcao = "sair" // ou "cadastrar", ou "listar"
+    switch(opcao) {
+      case "cadastrar":
+        console.log("vamos cadastrar")
+        break
+      case "listar":
+        console.log("vamos listar")
+        break
+      case "sair":
+        return    
+    }
+  }
+}
+
+start()
