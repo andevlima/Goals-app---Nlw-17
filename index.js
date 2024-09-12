@@ -1,5 +1,26 @@
 // selecionando um prompt da package instalada (inquirer)
-const { select } = require("@inquirer/prompts")
+const { select, input } = require("@inquirer/prompts")
+
+let meta = {
+  value: "Tomar 3L de água por dia",
+  checked: false,
+}
+
+let metas = [ meta ]
+
+const cadastrarMeta = async () => {
+  const meta = await input({message: "Digite a meta:"})
+
+  if(meta.length == 0) {
+    console.log("A meta não pode ser vazia.")
+    return
+  }
+
+  metas.push(
+    {value: meta, checked: false}
+  )
+
+}
 
 // sempre que usar await, a função tem q ter um async
 const start = async () => {
@@ -27,7 +48,8 @@ const start = async () => {
     // o valor da opção escolhida em choices será guardado em 'opcao', switch recebe 'opcao' e executa conforme o código abaixo
     switch (opcao) {
       case "cadastrar":
-        console.log("vamos cadastrar")
+        await cadastrarMeta()
+        console.log(metas)
         break
       case "listar":
         console.log("vamos listar")
