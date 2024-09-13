@@ -6,30 +6,28 @@ let meta = {
   checked: false,
 }
 
-let metas = [ meta ]
+let metas = [meta]
 
 const cadastrarMeta = async () => {
-  const meta = await input({message: "Digite a meta:"})
+  const meta = await input({ message: "Digite a meta:" })
 
-  if(meta.length == 0) {
+  if (meta.length == 0) {
     console.log("A meta não pode ser vazia.")
     return
   }
 
-  metas.push(
-    {value: meta, checked: false}
-  )
-
+  metas.push({ value: meta, checked: false })
 }
 
 const listarMetas = async () => {
-  const respostas = await checkbox ({
-    message: "Use as setas para mudar de meta, o espaço para marcar ou desmarcar e o Enter para finalizar essa etapa",
+  const respostas = await checkbox({
+    message:
+      "Use as setas para mudar de meta, o espaço para marcar ou desmarcar e o Enter para finalizar essa etapa",
     choices: [...metas],
     instructions: false,
   })
 
-  if(respostas.length == 0) {
+  if (respostas.length == 0) {
     console.log("Nenhuma meta selecionada!")
     return
   }
@@ -49,6 +47,22 @@ const listarMetas = async () => {
   console.log("Meta(s) marcada(s) como concluída(s)")
 }
 
+const metasRealizadas = async () => {
+  const realizadas = metas.filter((meta) => {
+    return meta.checked
+  })
+
+  if(realizadas.length == 0) {
+    console.log("Não existem metas realizadas! :(")
+    return
+  }
+
+  await select({
+    message: "Metas Realizadas",
+    choices: [...realizadas]
+  })
+}
+
 // sempre que usar await, a função tem q ter um async
 const start = async () => {
   while (true) {
@@ -66,6 +80,10 @@ const start = async () => {
           value: "listar",
         },
         {
+          name: "Metas realizadas",
+          value: "realizadas",
+        },
+        {
           name: "Sair",
           value: "sair",
         },
@@ -81,6 +99,9 @@ const start = async () => {
       case "listar":
         await listarMetas()
         console.log(metas)
+        break
+      case "realizadas":
+        await metasRealizadas()
         break
       case "sair":
         console.log("Até a próxima!")
